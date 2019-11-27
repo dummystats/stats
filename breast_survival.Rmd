@@ -522,16 +522,14 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 
 **<span style="color:red"> - Break the cohort into two groups (< and >=50 years old)</span>**
 
-**<span style="color:red"> - Once it's done, remove the eval=F tag in the markdown in the next plot chunk (age2) header to plot the results</span>**
-
 **<span style="color:red"> - What can you say about the results of the regression model ? </span>**
 
 
-```{r age, include=T, eval=F}
+```{r age, include=T}
 #your code here
 ```
 
-```{r age2, eval=F}
+```{r age2}
 
 # info=summary(fit_table)
 # pval=info$sctest[3]
@@ -578,12 +576,12 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 
 ### - ERBB2 amplification
 
-```{r mutations, include=F}
+```{r mutations, include=T}
 #your code here
 ```
 
 
-```{r, echo=F}
+```{r, echo=T}
 # pval=info$sctest[3]
 # coef=info$coefficients[1]
 # HR=info$coefficients[2]
@@ -631,7 +629,7 @@ ggsurvplot(fit,data=clinical,
 ## Survival according to treatments
 
 
-```{r treatements0}
+```{r treatements0, echo=F}
 treatments=clinical[,c(117:119,124,128,136:137)]
 study=ifelse(as.integer(clinical$study_ID)==22226,1,0)
 treatments=cbind(treatments,study)
@@ -660,11 +658,7 @@ if (pval<0.05){print(pval);print(HR)}
              title = "\tSurvival model",xlab = "Time in Months",pval.method =   TRUE,
              ggtheme = theme_bw(), ncensor.plot = F, combine = T,surv.scale=c("percent"), xlim = c(0, 145) )
 
- fit <- survfit(Surv(clinical$OS_months_or_MIN_months_of_OS,clinical$OS) ~ neoadj_or_adj ,                 
-             data = data.frame(clinical))
-fit_table <- coxph(Surv(clinical$OS_months_or_MIN_months_of_OS,clinical$OS) ~ neoadj_or_adj)
-info=summary(fit_table)
-print(info)
+
  
 ```
 
@@ -682,24 +676,23 @@ print(info)
 ```{r, include=F}
 clinical=pData(eset)
 
-clinical=data.frame(clinical$study_ID,
-           clinical$OS,
-           clinical$OS_months_or_MIN_months_of_OS,
-           clinical$RFS,
-           clinical$RFS_months_or_MIN_months_of_RFS,
-           clinical$metastasis,
-           clinical$age,
-           clinical$ER_preTrt,
-           clinical$ER_fmolmg_preTrt,
-           clinical$tumor_size_cm_preTrt_preSurgery,
-           clinical$tumor_stage_preTrt,
-            clinical$preTrt_lymph_node_status,
-           clinical$ERBB2_CPN_amplified,
-           clinical$Erbeta_preTrt,
-           clinical$PTEN_mutation,
-           clinical$PTEN_pos
+clinical=data.frame("Study"=clinical$study_ID,
+           'OS_censor'=clinical$OS,
+           'OS_month'=clinical$OS_months_or_MIN_months_of_OS,
+           'RFS_censor'=clinical$RFS,
+           'RFS_month'=clinical$RFS_months_or_MIN_months_of_RFS,
+           'Metastasis'=clinical$metastasis,
+           'Age'=clinical$age,
+           'ER_preTrt_censor'=clinical$ER_preTrt,
+           'ER_preTrt_fmolmg'=clinical$ER_fmolmg_preTrt,
+           'tumor_size_preTrt&Surg'=clinical$tumor_size_cm_preTrt_preSurgery,
+           'tumor_stage_preTrt'=gsub('T','',clinical$tumor_stage_preTrt),
+            'preTrt_lymph_node_status'=ifelse(clinical$preTrt_lymph_node_status=='positive',1,0),
+           'Erbeta_preTrt'=clinical$Erbeta_preTrt
            )
-res.pca=PCA(sapply(clinical[,c(2,3,4,5,6,7,8,9)],as.numeric))
+
+clinical[,c(2,3,4,5,6,7,8,9)]
+res.pca=PCA(sapply(clinical[,c(2:9)],as.numeric))
 ```
  
 ```{r, echo=F}
