@@ -43,13 +43,15 @@ suppressMessages(library(Biobase))
 suppressMessages(library(limma))
 suppressMessages(library(survival))
 suppressMessages(library(survminer))
-suppressMessages(library("curatedBreastData"))
+suppressMessages(library(curatedBreastData))
 suppressMessages(library(survivalROC))
 suppressMessages(library(tibble))
 suppressMessages(library(purrr))
 suppressMessages(library(tidyr))
 suppressMessages(library(dplyr))
 suppressMessages(library(FactoMineR))
+suppressMessages(library(GEOquery))
+
 
 ```
 
@@ -72,7 +74,6 @@ data(clinicalData)
 #renaming for easier handling
 
 list.eset=curatedBreastDataExprSetList
-
 
 
 ```
@@ -134,12 +135,12 @@ eset=list.eset[[4]]
 
 #what types are eset and eset@assayData$exprs
 
-#your code here
+#enter your code here
 
 #have a look into exprs(eset)
 #USE head()
 
-#your code here
+#enter your code here
 
 ```
 
@@ -147,7 +148,7 @@ eset=list.eset[[4]]
 
 ### - Use `eset@featureData@data` or fData() to access features (gene) metadata 
 
-#### using class() head() levels()
+#### using class() head() levels() unique()
 
 ```{r eset fdata}
 #what types are fData(eset) and fData(eset)$gene_symbol
@@ -167,7 +168,7 @@ eset=list.eset[[4]]
 ### - eset dimensions
 ```{r eset dim}
 #what are the dimensions of eset
-dim(eset)
+#enter your code here
 ```
 
 ##  pData()
@@ -176,7 +177,7 @@ dim(eset)
 
 ```{r eset pData}
 # look inside pData(eset) for these dimentions [c(1:3), c(1:30)]
-#your code here
+#enter your code here
 
 ```
 
@@ -278,17 +279,16 @@ clinical=data.frame(clinical$study_ID,
 paste(names(clinical),sapply(clinical, class),sep = " - ")
 ```
 
-**<span style="color:red">* Use the head function to display the content of the variable named "clinical" </span>** 
+**<span style="color:red">* Use the head() function to display the content of the variable named "clinical" </span>** 
 
 ```{r}
 
-#Your code here
+#enter your code here
 ```
  
 ## Gene expression impact on survival
 
 HER2-positive breast cancer (Lancet, 2016)
-IF: 47.831 (2016) -> 59.102 (2019)
 
 Anti-HER2 treatment for HER2-positive breast cancer has changed the natural biology of this disease. This Series article reviews the main achievements so far in the treatment of both metastatic and early HER2-positive breast cancer. The success of neoadjuvant therapy in HER2-positive early breast cancer is especially acknowledged, as pertuzumab has been approved on the basis of a higher proportion of patients achieving a pathological complete response with pertuzumab and trastuzumab than with trastuzumab alone in a neoadjuvant study. Event-free survival after the confirmatory adjuvant trial completed recruitment was numerically better with pertuzumab plus trastuzumab than with trastuzumab alone. With survival rates of almost 5 years in women with metastatic HER2-positive breast cancer and 75% of patients achieving a pathological complete response, new treatments in the past decade have clearly improved the prognosis of HER2-positive breast cancer. Despite these achievements, however, the persisting high toll of deaths resulting from HER2-positive breast cancer calls for continued, intensive clinical research of newer therapies and combinations.
 
@@ -336,11 +336,11 @@ erbb2=ifelse(subset>mean(subset),1,0)
 
 gene=erbb2
 
-#fit0
+#fit0=
 
-#fit
+#fit=
 
-#fit table
+#fit table=
 
 # info=summary(fit_table)
 # pval=info$sctest[3]
@@ -358,6 +358,13 @@ gene=erbb2
 #### - PTEN - tumor suppressor 
 
 ```{r echo=T, results='hide'}
+
+
+#fit0=
+
+#fit=
+
+#fit table=
 
 # info=summary(fit_table)
 # pval=info$sctest[3]
@@ -408,7 +415,11 @@ Here is an example of cohort heterogeneity of survival scores across all genes
 
 ```{r relapse 2.1}
 
-#Your code here
+#enter your code here
+
+#fit=
+
+#fit table=
 
 ```
 
@@ -500,6 +511,10 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 
 ```{r metastasis, echo=F}
 
+#fit=
+
+#fit table=
+
 # info=summary(fit_table)
 # pval=info$sctest[3]
 # coef=info$coefficients[1]
@@ -526,7 +541,10 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 
 
 ```{r age, include=T}
-#your code here
+#fit=
+
+#fit table=
+
 ```
 
 ```{r age2}
@@ -550,7 +568,12 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 ## Tumor size impact on survival 'clinical.tumor_size_cm_preTrt_preSurgery'
 
 ```{r tumor, include=T, eval=F}
-#your code here
+#enter your code here
+
+#fit=
+
+#fit table=
+
 ```
 
 
@@ -577,7 +600,11 @@ It represent the FPR (false positive rate) against the TPR (true positive rate)
 ### - ERBB2 amplification
 
 ```{r mutations, include=T}
-#your code here
+#enter your code here
+
+#fit=
+
+#fit table=
 ```
 
 
